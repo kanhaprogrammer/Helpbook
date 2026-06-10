@@ -1623,3 +1623,320 @@ footer {
   font-size: 1.25rem;
   margin-right: 0;
 }
+
+/* --- Base responsive adjustments --- */
+@media (max-width: 768px) {
+
+    /* Container padding for all pages */
+    .container {
+        padding: 0 1rem !important;
+    }
+
+    /* Reduce section padding */
+    .section {
+        padding: 2rem 0 !important;
+    }
+
+    /* Better touch targets */
+    button,
+    .btn-primary,
+    .btn-outline,
+    .filter-tab,
+    .dash-nav-item {
+        cursor: pointer;
+        min-height: 44px;
+        /* Apple's recommended minimum touch target */
+    }
+    
+    /* Dashboard grid to single column */
+    .dash-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Dashboard nav - horizontal scrollable */
+    .dash-nav {
+        position: static !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 0.5rem !important;
+        padding: 0.6rem !important;
+        margin-bottom: 0.5rem !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+    }
+
+    .dash-nav::-webkit-scrollbar {
+        height: 3px;
+    }
+
+    .dash-nav-item {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        min-width: auto !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 0.85rem !important;
+        border-radius: 40px !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    /* Stat cards - 2 column grid */
+    .dash-stat-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+
+    .dash-stat-card {
+        padding: 1rem !important;
+        text-align: center !important;
+    }
+
+    .dash-stat-icon {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .dash-stat-val {
+        font-size: 1.5rem !important;
+    }
+
+    .dash-stat-label {
+        font-size: 0.7rem !important;
+    }
+
+    /* Progress bar cards */
+    div[style*="background:var(--bg-card)"][style*="border-radius:var(--radius-md)"] {
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .dash-section-title {
+        font-size: 1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* Tech breakdown */
+    #techBreakdown {
+        gap: 0.75rem !important;
+    }
+
+    /* All tutorials list items */
+    #allTutorialsProgress>div,
+    #bookmarksList>div {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+        padding: 0.85rem !important;
+    }
+
+    #allTutorialsProgress>div>div:first-child,
+    #bookmarksList>div>div:first-child {
+        flex: 1 !important;
+        min-width: 120px;
+    }
+
+    #allTutorialsProgress>div>div:last-child,
+    #bookmarksList>div>div:last-child {
+        width: 100% !important;
+        display: flex !important;
+        gap: 0.5rem !important;
+        justify-content: flex-end !important;
+    }
+
+    #allTutorialsProgress .btn-outline,
+    #bookmarksList .btn-outline {
+        flex: 1 !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* Activity log items */
+    #activityLog>div {
+        padding: 0.7rem !important;
+        gap: 0.6rem !important;
+    }
+
+    #activityLog>div>span:first-child {
+        font-size: 1rem !important;
+    }
+
+    #activityLog>div>div {
+        flex: 1;
+    }
+
+    /* Settings panel */
+    #panel-settings>div {
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    #panel-settings>div>div:first-child {
+        font-size: 1rem !important;
+    }
+
+    #panel-settings>div p {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    #panel-settings>div>div:last-child {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    #setDark,
+    #setLight,
+    #resetProgressBtn,
+    #clearBookmarksBtn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.6rem !important;
+    }
+
+    /* Empty states */
+    .no-results {
+        padding: 2rem 1rem !important;
+    }
+
+    .no-results h3 {
+        font-size: 1rem !important;
+    }
+
+    /* Page header */
+    .container.section>div:first-child {
+        margin-bottom: 1.25rem !important;
+    }
+
+    .container.section>div:first-child h1 {
+        font-size: 1.6rem !important;
+        line-height: 1.2;
+    }
+
+    /* Recent completed items */
+    #recentCompleted>div {
+        flex-wrap: wrap !important;
+        gap: 0.6rem !important;
+        padding: 0.8rem !important;
+    }
+
+    #recentCompleted>div>div:first-child {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1rem !important;
+    }
+
+    #recentCompleted>div>div:nth-child(2) {
+        flex: 1 !important;
+        min-width: 120px;
+    }
+
+    /* Toast positioning */
+    .toast {
+        bottom: 1rem !important;
+        right: 1rem !important;
+        left: 1rem !important;
+        font-size: 0.8rem !important;
+        padding: 0.7rem 1rem !important;
+    }
+
+    /* Footer adjustments */
+    .footer-bottom {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 0.75rem !important;
+    }
+}
+
+/* --- Extra small devices (≤ 480px) --- */
+@media (max-width: 480px) {
+
+    /* Even tighter spacing */
+    .container {
+        padding: 0 0.75rem !important;
+    }
+
+    .tutorial-title {
+        font-size: 1.35rem !important;
+    }
+
+    .prose h2 {
+        font-size: 1.15rem !important;
+    }
+
+    .prose h3 {
+        font-size: 0.95rem !important;
+    }
+
+    /* Editor tabs - even smaller text */
+    .editor-tab {
+        font-size: 0.65rem !important;
+        padding: 0.5rem 0.2rem !important;
+    }
+
+    /* Stat cards - single column on very tiny? keep 2 but shrink */
+    .dash-stat-grid {
+        gap: 0.5rem !important;
+    }
+
+    .dash-stat-card {
+        padding: 0.7rem !important;
+    }
+
+    .dash-stat-val {
+        font-size: 1.25rem !important;
+    }
+
+    /* Button text */
+    .btn-primary,
+    .btn-outline {
+        font-size: 0.8rem !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+}
+
+/* --- Fix for iPhone notch / dynamic island --- */
+@supports (padding: max(0px)) {
+    .navbar {
+        padding-left: max(1rem, env(safe-area-inset-left)) !important;
+        padding-right: max(1rem, env(safe-area-inset-right)) !important;
+    }
+
+    .container {
+        padding-left: max(1rem, env(safe-area-inset-left)) !important;
+        padding-right: max(1rem, env(safe-area-inset-right)) !important;
+    }
+
+    .toast {
+        bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+        right: max(1rem, env(safe-area-inset-right)) !important;
+        left: max(1rem, env(safe-area-inset-left)) !important;
+    }
+}
+
+/* --- Landscape orientation fixes for mobile --- */
+@media (max-width: 896px) and (orientation: landscape) {
+
+    /* Reduce heights in landscape */
+    .editor-pane textarea {
+        height: 100px !important;
+    }
+
+    .editor-output iframe {
+        height: 150px !important;
+    }
+
+    .comment-form textarea {
+        height: 60px !important;
+    }
+
+    .hero {
+        min-height: auto !important;
+        padding: 2rem 0 !important;
+    }
+}
