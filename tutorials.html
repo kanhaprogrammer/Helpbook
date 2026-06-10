@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Browse all Helpbook tutorials — HTML, CSS, JavaScript, Tailwind, Node.js, MongoDB, and Git.">
+  <title>Tutorials — Helpbook</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome 6 (Free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <span class="nav-brand-text">Help<span>book</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tutorials.html" class="active">Tutorials</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeBtn" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="tutorials.html">Tutorials</a>
+    <a href="about.html">About</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+  <main>
+    <!-- Page hero -->
+    <section style="background:var(--bg-secondary);border-bottom:1px solid var(--border);padding:4rem 0 3rem">
+      <div class="container">
+        <div style="text-align:center;max-width:640px;margin:0 auto">
+          <div class="section-label">All Tutorials</div>
+          <h1 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Everything you need to build the web</h1>
+          <p style="color:var(--text-secondary);font-size:1.05rem;line-height:1.8">
+            From your first HTML tag to deploying full-stack apps — all in one place, all free.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Browse section -->
+    <section class="section">
+      <div class="container">
+
+        <!-- Search -->
+        <div class="search-wrap fade-up">
+          <span class="search-icon"><i class="fas fa-search"></i></span>
+          <input type="search" class="search-input" id="tutSearch" placeholder="Search tutorials…" autocomplete="off">
+          <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs" id="filterTabs"></div>
+
+        <!-- Level filter -->
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;align-items:center">
+          <span style="font-size:0.8rem;color:var(--text-muted);margin-right:0.25rem">Level:</span>
+          <button class="filter-tab active" data-level="All">All Levels</button>
+          <button class="filter-tab" data-level="Beginner">Beginner</button>
+          <button class="filter-tab" data-level="Intermediate">Intermediate</button>
+          <button class="filter-tab" data-level="Advanced">Advanced</button>
+        </div>
+
+        <!-- Results count -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+          <p style="font-size:0.875rem;color:var(--text-muted)">
+            Showing <span id="resultCount" style="color:var(--text-primary);font-weight:600">0</span> tutorials
+          </p>
+          <select id="sortSelect"
+            style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);padding:0.4rem 0.75rem;border-radius:var(--radius-sm);font-size:0.825rem;font-family:var(--font-body);cursor:pointer;outline:none">
+            <option value="default">Sort: Default</option>
+            <option value="az">A → Z</option>
+            <option value="level">By Level</option>
+            <option value="duration">By Duration</option>
+          </select>
+        </div>
+
+        <!-- Cards grid -->
+        <div class="cards-grid" id="cardsGrid"></div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom" style="padding-top:1.5rem;border-top:1px solid var(--border)">
+        <div class="footer-copy">© 2026 Helpbook. Built for learners, by learners.</div>
+        <a href="index.html" class="btn-outline" style="font-size:0.8rem">← Back to Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // ---- STATE ----
+    let activeTech = 'All';
+    let activeLevel = 'All';
+    let activeQuery = '';
+    let activeSort = 'default';
+
+    // ---- TECH FILTER TABS ----
+    const techs = ['All', ...new Set(TUTORIALS.map(t => t.tech))];
+    const techIcons = { HTML: '<i class="fab fa-html5"></i>', CSS: '<i class="fab fa-css3-alt"></i>', JavaScript: '<i class="fab fa-js"></i>', Tailwind: '<i class="fas fa-wind"></i>', 'Node.js': '<i class="fab fa-node-js"></i>', MongoDB: '<i class="fas fa-leaf"></i>', Tools: '<i class="fab fa-git-alt"></i>', All: '<i class="fas fa-star"></i>' };
+
+    document.getElementById('filterTabs').innerHTML = techs.map(t =>
+      `<button class="filter-tab${t === 'All' ? ' active' : ''}" data-tech="${t}">
+        ${techIcons[t] ? `<span style="margin-right:4px">${techIcons[t]}</span>` : ''}${t}
+       </button>`
+    ).join('');
+
+    document.querySelectorAll('[data-tech]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-tech]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTech = btn.dataset.tech;
+        render();
+      });
+    });
+
+    // ---- LEVEL FILTER TABS ----
+    document.querySelectorAll('[data-level]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-level]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeLevel = btn.dataset.level;
+        render();
+      });
+    });
+
+    // ---- SEARCH ----
+    const searchInput = document.getElementById('tutSearch');
+    const clearBtn = document.getElementById('searchClear');
+
+    searchInput.addEventListener('input', () => {
+      activeQuery = searchInput.value.trim().toLowerCase();
+      clearBtn.classList.toggle('visible', activeQuery.length > 0);
+      render();
+    });
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      activeQuery = '';
+      clearBtn.classList.remove('visible');
+      render();
+    });
+
+    // ---- SORT ----
+    document.getElementById('sortSelect').addEventListener('change', e => {
+      activeSort = e.target.value;
+      render();
+    });
+
+    // ---- HANDLE ?tech= URL PARAM ----
+    const urlParams = new URLSearchParams(window.location.search);
+    const techParam = urlParams.get('tech');
+    if (techParam) {
+      activeTech = techParam;
+      document.querySelectorAll('[data-tech]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tech === techParam);
+      });
+    }
+
+    // ---- RENDER ----
+    function render() {
+      let list = TUTORIALS.filter(t => {
+        const matchTech = activeTech === 'All' || t.tech === activeTech;
+        const matchLevel = activeLevel === 'All' || t.level === activeLevel;
+        const matchQ = !activeQuery ||
+          t.title.toLowerCase().includes(activeQuery) ||
+          t.description.toLowerCase().includes(activeQuery) ||
+          t.tech.toLowerCase().includes(activeQuery);
+        return matchTech && matchLevel && matchQ;
+      });
+
+      // Sort
+      const levelOrder = { Beginner: 0, Intermediate: 1, Advanced: 2 };
+      if (activeSort === 'az') {
+        list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+      } else if (activeSort === 'level') {
+        list = [...list].sort((a, b) => (levelOrder[a.level] ?? 9) - (levelOrder[b.level] ?? 9));
+      } else if (activeSort === 'duration') {
+        list = [...list].sort((a, b) => parseInt(a.duration) - parseInt(b.duration));
+      }
+
+      document.getElementById('resultCount').textContent = list.length;
+
+      const grid = document.getElementById('cardsGrid');
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results" style="grid-column:1/-1">
+            <h3>No tutorials found</h3>
+            <p>Try a different search term, tech, or level filter.</p>
+          </div>`;
+      } else {
+        grid.innerHTML = list.map(buildTutorialCard).join('');
+      }
+    }
+
+    // ---- INIT ----
+    render();
+  </script>
+</body>
+
+</html>

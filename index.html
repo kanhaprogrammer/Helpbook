@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Helpbook — Your free guide to mastering web development. Learn HTML, CSS, JavaScript, Tailwind CSS, Node.js, MongoDB and more.">
+    <meta name="keywords"
+        content="web development tutorials, HTML, CSS, JavaScript, Tailwind, Node.js, MongoDB, learn coding">
+    <meta property="og:title" content="Helpbook — Master Web Development">
+    <meta property="og:description"
+        content="Free, structured web development tutorials for beginners and intermediate developers.">
+    <title>Helpbook — Master Web Development</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            <span class="nav-brand-text">Help<span>book</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="tutorials.html">Tutorials</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-theme" id="themeBtn" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+            <a href="tutorials.html" class="btn-primary">Start Learning →</a>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="tutorials.html">Tutorials</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <main>
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="hero-bg">
+                <div class="hero-orb orb-1"></div>
+                <div class="hero-orb orb-2"></div>
+                <div class="hero-orb orb-3"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content fade-up">
+                    <div class="hero-eyebrow">Free & Open for All Developers</div>
+                    <h1 class="hero-title">
+                        Your free helpbook to<br>
+                        <span class="highlight">master web development</span>
+                    </h1>
+                    <p class="hero-sub">
+                        Structured, hands-on tutorials for HTML, CSS, JavaScript, Tailwind, Node.js, and MongoDB.
+                        Built for beginners. Loved by developers.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="tutorials.html" class="btn-primary btn-lg">Browse Tutorials →</a>
+                        <a href="tutorial.html?id=html-basics" class="btn-outline btn-lg">Start with HTML</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">50+</div>
+                            <div class="hero-stat-label">Tutorials</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">7</div>
+                            <div class="hero-stat-label">Technologies</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">100%</div>
+                            <div class="hero-stat-label">Free Forever</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TECH STRIP ===== -->
+        <section class="tech-strip">
+            <div class="container">
+                <div class="tech-pills" id="techPills"></div>
+            </div>
+        </section>
+
+        <!-- ===== FEATURED TUTORIALS ===== -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <div class="section-label">Tutorials</div>
+                    <h2 class="section-title">Everything you need to build the web</h2>
+                    <p class="section-sub">From your first HTML tag to deploying full-stack apps — all in one place.</p>
+                </div>
+
+                <div class="search-wrap fade-up">
+                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                    <input type="search" class="search-input" id="homeSearch" placeholder="Search tutorials…"
+                        autocomplete="off">
+                    <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
+                </div>
+
+                <div class="filter-tabs" id="filterTabs"></div>
+                <div class="cards-grid" id="cardsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== RECENT ===== -->
+        <section class="section" style="padding-top:0">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Recently Added</div>
+                    <h2 class="section-title">Fresh content for you</h2>
+                </div>
+                <div class="recent-list" id="recentList"></div>
+                <div style="text-align:center;margin-top:2rem">
+                    <a href="tutorials.html" class="btn-outline">View All Tutorials →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA ===== -->
+        <section class="section-sm"
+            style="background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+            <div class="container" style="text-align:center;padding:3rem 1.5rem">
+                <div class="section-label">Ready to start?</div>
+                <h2 class="section-title">Zero setup. Just open and learn.</h2>
+                <p class="section-sub" style="margin-bottom:2rem">No account needed. No paywalls. Run code right in your
+                    browser.</p>
+                <a href="tutorials.html" class="btn-primary btn-lg">Explore All Tutorials →</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="nav-brand" style="margin-bottom:0.75rem;display:inline-flex">
+                        <div class="nav-logo">H</div>
+                        <span class="nav-brand-text">Help<span>book</span></span>
+                    </a>
+                    <p class="footer-brand-desc">A free, structured learning resource for web developers at every level.
+                        Built with ❤️ for the developer community.</p>
+                </div>
+                <div>
+                    <div class="footer-heading">Learn</div>
+                    <ul class="footer-links">
+                        <li><a href="tutorial.html?id=html-basics">HTML Basics</a></li>
+                        <li><a href="tutorial.html?id=css-flexbox">CSS Flexbox</a></li>
+                        <li><a href="tutorial.html?id=js-dom">JavaScript DOM</a></li>
+                        <li><a href="tutorial.html?id=tailwind-intro">Tailwind CSS</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Backend</div>
+                    <ul class="footer-links">
+                        <li><a href="tutorial.html?id=nodejs-express">Node.js & Express</a></li>
+                        <li><a href="tutorial.html?id=mongodb-basics">MongoDB</a></li>
+                        <li><a href="tutorial.html?id=git-github">Git & GitHub</a></li>
+                        <li><a href="tutorials.html">All Tutorials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Site</div>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="tutorials.html">Browse All</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">© 2026 Helpbook. Built for learners, by learners.</div>
+                <div class="footer-socials">
+                    <a class="social-btn" href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a class="social-btn" href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a class="social-btn" href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Build tech pills
+        const techs = ['All', ...new Set(TUTORIALS.map(t => t.tech))];
+        const pillColors = { HTML: '#ff7b45', CSS: '#4f7eff', JavaScript: '#f7df1e', Tailwind: '#38bdf8', 'Node.js': '#2ecc71', MongoDB: '#00ed64', Tools: '#9b5cff' };
+        const pillIcons = { HTML: '<i class="fab fa-html5"></i>', CSS: '<i class="fab fa-css3-alt"></i>', JavaScript: '<i class="fab fa-js"></i>', Tailwind: '<i class="fas fa-wind"></i>', 'Node.js': '<i class="fab fa-node-js"></i>', MongoDB: '<i class="fas fa-leaf"></i>', Tools: '<i class="fab fa-git-alt"></i>', All: '<i class="fas fa-star"></i>' };
+
+        document.getElementById('techPills').innerHTML = techs.map(t =>
+            `<a href="tutorials.html?tech=${t}" class="tech-pill">
+        <span class="pill-icon">${pillIcons[t] || '<i class="fas fa-book-open"></i>'}</span>${t}
+        </a>`).join('');
+
+        // Build filter tabs
+        let activeTech = 'All';
+        document.getElementById('filterTabs').innerHTML = techs.map(t =>
+            `<button class="filter-tab${t === 'All' ? ' active' : ''}" data-tech="${t}">${t}</button>`).join('');
+
+        document.querySelectorAll('.filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeTech = btn.dataset.tech;
+                const q = document.getElementById('homeSearch').value.trim().toLowerCase();
+                filterCards(q, activeTech, 'cardsGrid');
+            });
+        });
+
+        // Build cards
+        document.getElementById('cardsGrid').innerHTML = TUTORIALS.map(buildTutorialCard).join('');
+        // Build recent (3 most recent)
+        document.getElementById('recentList').innerHTML = TUTORIALS.slice(0, 3).map(buildRecentItem).join('');
+
+        // Init search
+        initSearch('homeSearch', 'cardsGrid');
+    </script>
+</body>
+
+</html>

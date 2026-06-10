@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Helpbook Dashboard — track progress, bookmarks, and learning streaks.">
+    <title>Dashboard — Helpbook</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            <span class="nav-brand-text">Help<span>book</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tutorials.html">Tutorials</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-theme" id="themeBtn" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="tutorials.html">Tutorials</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <main>
+        <div class="container section">
+
+            <!-- Page header -->
+            <div style="margin-bottom:2rem">
+                <div class="section-label">My Dashboard</div>
+                <h1
+                    style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:700;line-height:1.15;margin-bottom:0.4rem">
+                    Welcome back 👋
+                </h1>
+                <p style="color:var(--text-secondary)">Track your progress, bookmarks, and learning activity.</p>
+            </div>
+
+            <div class="dash-grid">
+
+                <!-- Sidebar nav -->
+                <nav class="dash-nav" aria-label="Dashboard navigation">
+                    <button class="dash-nav-item active" data-panel="overview"><i class="fas fa-chart-line"></i>
+                        Overview</button>
+                    <button class="dash-nav-item" data-panel="progress"><i class="fas fa-tasks"></i> Progress</button>
+                    <button class="dash-nav-item" data-panel="bookmarks"><i class="fas fa-bookmark"></i>
+                        Bookmarks</button>
+                    <button class="dash-nav-item" data-panel="activity"><i class="fas fa-history"></i> Activity</button>
+                    <button class="dash-nav-item" data-panel="settings" style="margin-top:auto"><i
+                            class="fas fa-cog"></i> Settings</button>
+                </nav>
+
+                <!-- Main content area -->
+                <div id="dashMain">
+
+                    <!-- ===== OVERVIEW PANEL ===== -->
+                    <div class="dash-panel active" id="panel-overview">
+
+                        <!-- Stat cards -->
+                        <div class="dash-stat-grid">
+                            <div class="dash-stat-card">
+                                <div class="dash-stat-icon"><i class="fas fa-tasks"></i></div>
+                                <div class="dash-stat-val" id="statCompleted">0</div>
+                                <div class="dash-stat-label">Tutorials Completed</div>
+                            </div>
+                            <div class="dash-stat-card">
+                                <div class="dash-stat-icon"><i class="fas fa-bookmark"></i></div>
+                                <div class="dash-stat-val" id="statBookmarks">0</div>
+                                <div class="dash-stat-label">Bookmarks Saved</div>
+                            </div>
+                            <div class="dash-stat-card">
+                                <div class="dash-stat-icon"><i class="fas fa-chart-line"></i></div>
+                                <div class="dash-stat-val" id="statPct">0%</div>
+                                <div class="dash-stat-label">Overall Progress</div>
+                            </div>
+                            <div class="dash-stat-card">
+                                <div class="dash-stat-icon"><i class="fas fa-trophy"></i></div>
+                                <div class="dash-stat-val" id="statStreak">0</div>
+                                <div class="dash-stat-label">Day Streak</div>
+                            </div>
+                        </div>
+
+                        <!-- Overall progress bar -->
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;margin-bottom:1.5rem">
+                            <div
+                                style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+                                <div class="dash-section-title" style="margin-bottom:0">Learning Progress</div>
+                                <span style="font-size:0.8rem;color:var(--text-muted)" id="progressDetail">0 of 0
+                                    tutorials</span>
+                            </div>
+                            <div class="progress-bar-wrap"
+                                style="height:10px;border-radius:99px;background:var(--bg-elevated)">
+                                <div class="progress-bar" id="overallBar"
+                                    style="width:0%;height:100%;border-radius:99px;background:var(--gradient-btn);transition:width 0.6s ease">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress by tech -->
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;margin-bottom:1.5rem">
+                            <div class="dash-section-title">Progress by Technology</div>
+                            <div id="techBreakdown" style="display:flex;flex-direction:column;gap:0.85rem"></div>
+                        </div>
+
+                        <!-- Recent completions -->
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem">
+                            <div class="dash-section-title">Recently Completed</div>
+                            <div id="recentCompleted"></div>
+                        </div>
+                    </div>
+
+                    <!-- ===== PROGRESS PANEL ===== -->
+                    <div class="dash-panel" id="panel-progress">
+                        <div class="dash-section-title">All Tutorials</div>
+                        <p style="color:var(--text-secondary);font-size:0.875rem;margin-bottom:1.5rem">Mark tutorials as
+                            complete directly from here, or click one to read it.</p>
+                        <div id="allTutorialsProgress" style="display:flex;flex-direction:column;gap:0.75rem"></div>
+                    </div>
+
+                    <!-- ===== BOOKMARKS PANEL ===== -->
+                    <div class="dash-panel" id="panel-bookmarks">
+                        <div class="dash-section-title">Saved Bookmarks</div>
+                        <div id="bookmarksList"></div>
+                    </div>
+
+                    <!-- ===== ACTIVITY PANEL ===== -->
+                    <div class="dash-panel" id="panel-activity">
+                        <div class="dash-section-title">Learning Activity</div>
+                        <p style="color:var(--text-secondary);font-size:0.875rem;margin-bottom:1.5rem">Your recent
+                            interactions logged this session.</p>
+                        <div id="activityLog" style="display:flex;flex-direction:column;gap:0.75rem"></div>
+                    </div>
+
+                    <!-- ===== SETTINGS PANEL ===== -->
+                    <div class="dash-panel" id="panel-settings">
+                        <div class="dash-section-title">Settings</div>
+
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;margin-bottom:1.25rem">
+                            <div style="font-weight:600;margin-bottom:0.25rem">Appearance</div>
+                            <p style="color:var(--text-secondary);font-size:0.875rem;margin-bottom:1rem">Choose how
+                                Helpbook looks for you.</p>
+                            <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+                                <button class="btn-outline" id="setDark"><i class="fas fa-moon"></i> Dark Mode</button>
+                                <button class="btn-outline" id="setLight"><i class="fas fa-sun"></i> Light Mode</button>
+                            </div>
+                        </div>
+
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;margin-bottom:1.25rem">
+                            <div style="font-weight:600;margin-bottom:0.25rem">Reset Progress</div>
+                            <p style="color:var(--text-secondary);font-size:0.875rem;margin-bottom:1rem">Clear all
+                                completed tutorials. This cannot be undone.</p>
+                            <button class="btn-outline" style="border-color:rgba(255,90,90,0.4);color:#ff5a5a"
+                                id="resetProgressBtn"><i class="fas fa-trash-alt"></i> Reset All Progress</button>
+                        </div>
+
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem">
+                            <div style="font-weight:600;margin-bottom:0.25rem">Clear Bookmarks</div>
+                            <p style="color:var(--text-secondary);font-size:0.875rem;margin-bottom:1rem">Remove all
+                                saved bookmarks.</p>
+                            <button class="btn-outline" style="border-color:rgba(255,90,90,0.4);color:#ff5a5a"
+                                id="clearBookmarksBtn"><i class="fas fa-trash-alt"></i> Clear All Bookmarks</button>
+                        </div>
+                    </div>
+
+                </div><!-- /dashMain -->
+            </div><!-- /dash-grid -->
+        </div><!-- /container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="padding-top:1.5rem;border-top:1px solid var(--border)">
+                <div class="footer-copy">© 2026 Helpbook. Built for learners, by learners.</div>
+                <a href="tutorials.html" class="btn-outline" style="font-size:0.8rem">Browse Tutorials →</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // ---- HELPERS ----
+        const techColors = {
+            HTML: '#ff7b45', CSS: '#4f7eff', JavaScript: '#f7df1e',
+            Tailwind: '#38bdf8', 'Node.js': '#2ecc71', MongoDB: '#00ed64', Tools: '#9b5cff'
+        };
+        const techIcons = {
+            HTML: '<i class="fab fa-html5"></i>', CSS: '<i class="fab fa-css3-alt"></i>',
+            JavaScript: '<i class="fab fa-js"></i>', Tailwind: '<i class="fas fa-wind"></i>',
+            'Node.js': '<i class="fab fa-node-js"></i>', MongoDB: '<i class="fas fa-leaf"></i>',
+            Tools: '<i class="fab fa-git-alt"></i>'
+        };
+
+        function emptyState(msg) {
+            return `<div style="text-align:center;padding:3rem 1rem;color:var(--text-muted)">
+                <div style="font-size:2.5rem;margin-bottom:0.75rem"><i class="fas fa-folder-open"></i></div>
+                <div style="font-size:0.9rem">${msg}</div>
+            </div>`;
+        }
+
+        function tutListItem(t, done) {
+            return `
+            <div style="background:var(--bg-card);border:1px solid ${done ? 'rgba(46,204,113,0.25)' : 'var(--border)'};border-radius:var(--radius-md);padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem">
+                <div style="width:42px;height:42px;border-radius:var(--radius-sm);background:${t.colorBg};display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0">${t.icon}</div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:600;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.title}</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem">${t.tech} · ${t.level} · ${t.duration}</div>
+                </div>
+                ${done ? '<span style="font-size:0.75rem;color:var(--accent-green);font-weight:600;flex-shrink:0"><i class=\"fas fa-check-circle\"></i> Done</span>' : ''}
+                <a href="tutorial.html?id=${t.id}" class="btn-outline" style="font-size:0.75rem;padding:0.35rem 0.75rem;flex-shrink:0">Open →</a>
+            </div>`;
+        }
+
+        // ---- LOAD DASHBOARD DATA ----
+        function loadDashboard() {
+            const progress = getProgress();
+            const bookmarks = getBookmarks();
+            const completed = Object.keys(progress);
+            const total = TUTORIALS.length;
+            const pct = total ? Math.round((completed.length / total) * 100) : 0;
+
+            // Stat cards
+            document.getElementById('statCompleted').textContent = completed.length;
+            document.getElementById('statBookmarks').textContent = bookmarks.length;
+            document.getElementById('statPct').textContent = pct + '%';
+
+            // Streak logic
+            let streak = parseInt(localStorage.getItem('hb_streak') || '0');
+            const lastVisit = localStorage.getItem('hb_last_visit');
+            const today = new Date().toDateString();
+            if (lastVisit !== today) {
+                const yesterday = new Date(Date.now() - 86400000).toDateString();
+                streak = lastVisit === yesterday ? streak + 1 : 1;
+                localStorage.setItem('hb_streak', streak);
+                localStorage.setItem('hb_last_visit', today);
+            }
+            document.getElementById('statStreak').textContent = streak;
+
+            // Overall progress bar
+            document.getElementById('overallBar').style.width = pct + '%';
+            document.getElementById('progressDetail').textContent = `${completed.length} of ${total} tutorials`;
+
+            // Tech breakdown
+            const techs = [...new Set(TUTORIALS.map(t => t.tech))];
+            document.getElementById('techBreakdown').innerHTML = techs.map(tech => {
+                const techTuts = TUTORIALS.filter(t => t.tech === tech);
+                const doneCnt = techTuts.filter(t => completed.includes(t.id)).length;
+                const techPct = techTuts.length ? Math.round((doneCnt / techTuts.length) * 100) : 0;
+                return `
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem">
+                        <span style="font-size:0.875rem;font-weight:500">${techIcons[tech] || ''} ${tech}</span>
+                        <span style="font-size:0.75rem;color:var(--text-muted)">${doneCnt}/${techTuts.length}</span>
+                    </div>
+                    <div style="height:6px;border-radius:99px;background:var(--bg-elevated)">
+                        <div style="height:100%;border-radius:99px;width:${techPct}%;background:${techColors[tech] || 'var(--accent-blue)'};transition:width 0.6s ease"></div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            // Recent completions (up to 4)
+            const recentDone = TUTORIALS.filter(t => completed.includes(t.id)).slice(0, 4);
+            document.getElementById('recentCompleted').innerHTML = recentDone.length
+                ? recentDone.map(t => tutListItem(t, true)).join('')
+                : emptyState('No tutorials completed yet. <a href="tutorials.html" style="color:var(--accent-blue)">Start learning →</a>');
+
+            // ---- PROGRESS PANEL ----
+            // BUG FIX: Added a "Mark Complete / Undo" toggle button so users can actually
+            // mark tutorials complete from this panel, as the description promises.
+            document.getElementById('allTutorialsProgress').innerHTML = TUTORIALS.map(t => {
+                const done = completed.includes(t.id);
+                return `
+                <div id="prog-row-${t.id}" style="background:var(--bg-card);border:1px solid ${done ? 'rgba(46,204,113,0.3)' : 'var(--border)'};border-radius:var(--radius-md);padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;transition:border-color 0.2s">
+                    <div style="font-size:1.5rem;flex-shrink:0">${t.icon}</div>
+                    <div style="flex:1;min-width:0">
+                        <div style="font-weight:600;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.title}</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem">${t.tech} · ${t.level} · ${t.duration}</div>
+                    </div>
+                    <div style="display:flex;gap:0.5rem;align-items:center;flex-shrink:0">
+                        <button
+                            class="btn-outline"
+                            onclick="toggleComplete('${t.id}', this)"
+                            style="font-size:0.75rem;padding:0.35rem 0.75rem;${done ? 'color:var(--accent-green);border-color:rgba(46,204,113,0.5)' : ''}">
+                            ${done ? '<i class="fas fa-check-circle"></i> Done' : 'Mark Complete'}
+                        </button>
+                        <a href="tutorial.html?id=${t.id}" class="btn-outline" style="font-size:0.75rem;padding:0.35rem 0.75rem">Open</a>
+                    </div>
+                </div>`;
+            }).join('');
+
+            // ---- BOOKMARKS PANEL ----
+            const bmTuts = TUTORIALS.filter(t => bookmarks.includes(t.id));
+            document.getElementById('bookmarksList').innerHTML = bmTuts.length
+                ? bmTuts.map(t => tutListItem(t, completed.includes(t.id))).join('')
+                : emptyState('No bookmarks yet. Hit the <i class="fas fa-bookmark"></i> icon on any tutorial to save it here.');
+
+            // ---- ACTIVITY PANEL ----
+            const activity = JSON.parse(sessionStorage.getItem('hb_activity') || '[]');
+            document.getElementById('activityLog').innerHTML = activity.length
+                ? activity.slice().reverse().map(a => `
+                    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.85rem 1.1rem;display:flex;align-items:center;gap:0.75rem">
+                        <span style="font-size:1.1rem">${a.icon}</span>
+                        <div>
+                            <div style="font-size:0.875rem;font-weight:500">${a.msg}</div>
+                            <div style="font-size:0.75rem;color:var(--text-muted)">${a.time}</div>
+                        </div>
+                    </div>`).join('')
+                : emptyState('No activity yet this session. Go read some tutorials!');
+        }
+
+        // BUG FIX: toggleComplete - new function to mark/unmark tutorials complete inline
+        function toggleComplete(id, btn) {
+            const p = getProgress();
+            const wasDone = !!p[id];
+            if (wasDone) {
+                delete p[id];
+                localStorage.setItem('hb_progress', JSON.stringify(p));
+                showToast('Marked as incomplete.', '<i class="fas fa-undo"></i>');
+            } else {
+                markComplete(id);
+                showToast('Marked as complete!', '<i class="fas fa-check-circle"></i>');
+            }
+            // Refresh progress panel row immediately without full reload
+            const row = document.getElementById('prog-row-' + id);
+            if (row) {
+                const nowDone = !wasDone;
+                row.style.borderColor = nowDone ? 'rgba(46,204,113,0.3)' : 'var(--border)';
+                btn.innerHTML = nowDone ? '<i class="fas fa-check-circle"></i> Done' : 'Mark Complete';
+                btn.style.color = nowDone ? 'var(--accent-green)' : '';
+                btn.style.borderColor = nowDone ? 'rgba(46,204,113,0.5)' : '';
+            }
+            // Refresh stat cards and overview bar
+            const completed = Object.keys(getProgress());
+            const total = TUTORIALS.length;
+            const pct = total ? Math.round((completed.length / total) * 100) : 0;
+            document.getElementById('statCompleted').textContent = completed.length;
+            document.getElementById('statPct').textContent = pct + '%';
+            document.getElementById('overallBar').style.width = pct + '%';
+            document.getElementById('progressDetail').textContent = `${completed.length} of ${total} tutorials`;
+        }
+
+        // ---- PANEL SWITCHING ----
+        // BUG FIX: reload dashboard data when switching back to overview/bookmarks/activity
+        // so stats don't go stale after a reset or bookmark change
+        document.querySelectorAll('.dash-nav-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.dash-nav-item').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+                // Reload data when switching to data panels so content stays fresh
+                if (['overview', 'bookmarks', 'activity', 'progress'].includes(btn.dataset.panel)) {
+                    loadDashboard();
+                }
+            });
+        });
+
+        // BUG FIX: ACTIVITY LOGGING patch — must be defined BEFORE any showToast
+        // calls below (resetProgressBtn, clearBookmarksBtn, setDark, setLight).
+        // Guard against double-patching if script re-runs.
+        if (!window._toastPatched) {
+            window._toastPatched = true;
+            const _origShowToast = window.showToast;
+            window.showToast = function (msg, icon) {
+                icon = icon || '<i class="fas fa-check-circle"></i>';
+                if (_origShowToast) _origShowToast(msg, icon);
+                const activity = JSON.parse(sessionStorage.getItem('hb_activity') || '[]');
+                activity.push({ msg, icon, time: new Date().toLocaleTimeString() });
+                sessionStorage.setItem('hb_activity', JSON.stringify(activity));
+            };
+        }
+
+        // ---- SETTINGS ACTIONS ----
+        // BUG FIX: moved Dark/Light onclick out of HTML attributes to avoid
+        // unescaped-quote breakage; wired up here safely as JS event listeners.
+        document.getElementById('setDark').addEventListener('click', () => {
+            applyTheme('dark');
+            localStorage.setItem('hb_theme', 'dark');
+            showToast('Dark mode enabled', '<i class="fas fa-moon"></i>');
+        });
+
+        document.getElementById('setLight').addEventListener('click', () => {
+            applyTheme('light');
+            localStorage.setItem('hb_theme', 'light');
+            showToast('Light mode enabled', '<i class="fas fa-sun"></i>');
+        });
+
+        document.getElementById('resetProgressBtn').addEventListener('click', () => {
+            if (confirm('Reset all progress? This cannot be undone.')) {
+                localStorage.removeItem('hb_progress');
+                showToast('Progress reset.', '<i class="fas fa-trash-alt"></i>');
+                loadDashboard();
+            }
+        });
+
+        document.getElementById('clearBookmarksBtn').addEventListener('click', () => {
+            if (confirm('Clear all bookmarks?')) {
+                localStorage.removeItem('hb_bookmarks');
+                showToast('Bookmarks cleared.', '<i class="fas fa-trash-alt"></i>');
+                loadDashboard();
+            }
+        });
+
+        // ---- INIT ----
+        loadDashboard();
+    </script>
+</body>
+
+</html>

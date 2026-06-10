@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Tutorial — Helpbook</title>
+    <meta name="description" id="pageDesc" content="Web development tutorial on Helpbook">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <style>
+        .editor-panels {
+            display: none;
+        }
+
+        .editor-panels.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            <span class="nav-brand-text">Help<span>book</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tutorials.html" class="active">Tutorials</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-theme" id="themeBtn" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="tutorials.html">Tutorials</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <main>
+        <div class="container section">
+            <div class="tutorial-layout" id="tutorialLayout">
+                <!-- Content loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Related tutorials -->
+        <section style="padding:3rem 0;background:var(--bg-secondary);border-top:1px solid var(--border)">
+            <div class="container">
+                <div class="section-header" style="margin-bottom:2rem">
+                    <div class="section-label">Keep Learning</div>
+                    <h2 class="section-title" style="font-size:1.75rem">Related Tutorials</h2>
+                </div>
+                <div class="cards-grid" id="relatedGrid"
+                    style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="padding-top:1.5rem;border-top:1px solid var(--border)">
+                <div class="footer-copy">© 2026 Helpbook. Happy learning!</div>
+                <a href="tutorials.html" class="btn-outline" style="font-size:0.8rem">← All Tutorials</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const tutId = params.get('id');
+        const tut = TUTORIALS.find(t => t.id === tutId);
+
+        if (!tut) {
+            document.getElementById('tutorialLayout').innerHTML = `
+      <div style="text-align:center;padding:4rem;grid-column:1/-1">
+        <div style="font-size:3rem;margin-bottom:1rem">😕</div>
+        <h2 style="font-family:var(--font-display);margin-bottom:0.75rem">Tutorial not found</h2>
+        <p style="color:var(--text-secondary);margin-bottom:1.5rem">We couldn't find that tutorial.</p>
+        <a href="tutorials.html" class="btn-primary">Browse All Tutorials</a>
+      </div>`;
+        } else {
+            document.title = `${tut.title} — Helpbook`;
+            document.getElementById('pageTitle').textContent = `${tut.title} — Helpbook`;
+            document.getElementById('pageDesc').content = tut.description;
+
+            const hasTryIt = tut.tryItCode && (tut.tryItCode.html || tut.tryItCode.css || tut.tryItCode.js);
+
+            document.getElementById('tutorialLayout').innerHTML = `
+      <!-- Main Content -->
+      <article class="tutorial-content">
+        <header class="tutorial-header">
+          <nav class="tutorial-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <a href="tutorials.html">Tutorials</a>
+            <span>›</span>
+            <a href="tutorials.html?tech=${tut.tech}">${tut.tech}</a>
+            <span>›</span>
+            <span>${tut.title}</span>
+          </nav>
+          <h1 class="tutorial-title">${tut.title}</h1>
+          <p class="tutorial-desc">${tut.description}</p>
+          <div class="tutorial-meta-bar">
+            <div class="tmeta"><i class="far fa-clock"></i> <span class="tmeta-val">${tut.duration}</span></div>
+            <div class="tmeta"><i class="fas fa-book-open"></i> <span class="tmeta-val">${tut.lessons} lessons</span></div>
+            <div class="tmeta"><i class="far fa-calendar-alt"></i> <span class="tmeta-val">${tut.date}</span></div>
+            <div class="tmeta"><span class="badge badge-${tut.level.toLowerCase()}">${tut.level}</span></div>
+          </div>
+
+          <!-- Objectives -->
+          <div style="background:rgba(79,126,255,0.06);border:1px solid rgba(79,126,255,0.2);border-radius:var(--radius-md);padding:1.25rem 1.5rem;margin-bottom:1.5rem">
+            <div style="font-weight:700;font-family:var(--font-display);margin-bottom:0.75rem;font-size:0.9rem;color:var(--accent-blue)"><i class="fas fa-bullseye"></i> What you'll learn</div>
+            <ul style="color:var(--text-secondary);padding-left:1.25rem;line-height:1.9;font-size:0.9rem">
+              ${tut.objectives.map(o => `<li>${o}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem">
+            <button class="btn-outline" id="bookmarkBtn"><i class="far fa-bookmark"></i> Bookmark</button>
+            <button class="btn-outline" id="markCompleteBtn">Mark as Complete</button>
+          </div>
+        </header>
+
+        <!-- Tutorial Body -->
+        <div class="prose" id="tutorialBody">${tut.content}</div>
+
+        ${hasTryIt ? `
+        <!-- Try It Editor -->
+        <div class="editor-section">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem">
+            <h3 style="font-family:var(--font-display);font-weight:700;font-size:1.1rem"><i class="fas fa-flask"></i> Try It Yourself</h3>
+            <button class="btn-primary" onclick="runCode()" style="font-size:0.825rem;padding:0.45rem 1rem"><i class="fas fa-play"></i> Run</button>
+          </div>
+          <div class="editor-tabs">
+            <button class="editor-tab active" data-target="html">HTML</button>
+            <button class="editor-tab" data-target="css">CSS</button>
+            <button class="editor-tab" data-target="js">JS</button>
+          </div>
+          <div class="editor-panels active" id="htmlPanel">
+            <div class="editor-pane"><textarea id="htmlPane" spellcheck="false"></textarea></div>
+          </div>
+          <div class="editor-panels" id="cssPanel">
+            <div class="editor-pane"><textarea id="cssPane" spellcheck="false"></textarea></div>
+          </div>
+          <div class="editor-panels" id="jsPanel">
+            <div class="editor-pane"><textarea id="jsPane" spellcheck="false"></textarea></div>
+          </div>
+          <div class="editor-run">
+            <span style="font-size:0.78rem;color:var(--text-muted)">Output preview</span>
+            <button class="btn-outline" onclick="resetCode()" style="font-size:0.78rem;padding:0.3rem 0.75rem"><i class='fas fa-undo-alt'></i> Reset</button>
+          </div>
+          <div class="editor-output">
+            <iframe id="outputFrame" title="Code output"></iframe>
+          </div>
+        </div>` : ''}
+
+        <!-- Rating -->
+        <div class="rating-section">
+          <div class="rating-label">Was this tutorial helpful?</div>
+          <div class="rating-btns">
+            <button class="btn-like" id="likeBtn"><i class="fas fa-thumbs-up"></i> Yes, helpful</button>
+            <button class="btn-dislike" id="dislikeBtn"><i class="fas fa-thumbs-down"></i> Needs work</button>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="comments-section">
+          <h3 class="comments-title"><i class="fas fa-comments"></i> Comments (${tut.comments.length})</h3>
+          <div class="comment-form">
+            <textarea id="commentText" placeholder="Share your thoughts or ask a question…"></textarea>
+            <button class="btn-primary" id="commentSubmit">Post Comment</button>
+          </div>
+          <div id="commentList"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div style="display:flex;justify-content:space-between;padding:2rem 0;border-top:1px solid var(--border);margin-top:2rem">
+          <a href="tutorials.html" class="btn-outline">← All Tutorials</a>
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="tutorial-sidebar">
+        <!-- TOC -->
+        <div class="toc-card">
+          <div class="toc-title">In This Tutorial</div>
+          <ul class="toc-list">
+            ${tut.toc.map(item => `<li><a href="#${item.id}">${item.label}</a></li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Progress Card -->
+        <div class="toc-card">
+          <div class="toc-title">Your Progress</div>
+          <div style="margin-bottom:0.75rem">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem">
+              <span>Overall</span>
+              <span id="progressPct">0%</span>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" id="progressBar" style="width:0%"></div>
+            </div>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-muted)" id="progressLabel">Complete tutorials to track progress</div>
+        </div>
+
+        <!-- Resources Card -->
+        <div class="toc-card">
+          <div class="toc-title">Resources</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem">
+            <a href="#" onclick="showToast('PDF coming soon!','<i class="fas fa-file-pdf"></i>');return false" class="btn-outline" style="text-align:center;font-size:0.825rem;padding:0.5rem"><i class="fas fa-file-pdf"></i> Download PDF</a>
+            <a href="#" onclick="showToast('Source code coming soon!','<i class="fas fa-download"></i>');return false" class="btn-outline" style="text-align:center;font-size:0.825rem;padding:0.5rem"><i class="fas fa-download"></i> Download Code</a>
+          </div>
+        </div>
+      </aside>
+    `;
+
+            // Init everything
+            if (hasTryIt) {
+                initEditor(tut.tryItCode);
+                window.resetCode = () => initEditor(tut.tryItCode);
+
+                // Re-setup tabs since DOM just rendered
+                document.querySelectorAll('.editor-tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.editor-panels').forEach(p => p.classList.remove('active'));
+                        tab.classList.add('active');
+                        document.getElementById(tab.dataset.target + 'Panel').classList.add('active');
+                        runCode();
+                    });
+                });
+            }
+
+            initRating();
+            initBookmarkBtn(tut.id);
+            initMarkComplete(tut.id);
+            initTocHighlight();
+            initComments(tut.comments);
+
+            // Progress
+            const total = TUTORIALS.length;
+            const done = Object.keys(getProgress()).length;
+            const pct = Math.round((done / total) * 100);
+            document.getElementById('progressBar').style.width = pct + '%';
+            document.getElementById('progressPct').textContent = pct + '%';
+            document.getElementById('progressLabel').textContent = `${done} of ${total} tutorials completed`;
+
+            // Related
+            const related = TUTORIALS.filter(t => t.id !== tut.id && (t.tech === tut.tech || t.level === tut.level)).slice(0, 3);
+            document.getElementById('relatedGrid').innerHTML = related.map(buildTutorialCard).join('');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="About Helpbook — A free web development learning platform built for beginners and intermediate developers.">
+    <title>About — Helpbook</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            <span class="nav-brand-text">Help<span>book</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tutorials.html">Tutorials</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-theme" id="themeBtn" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="tutorials.html">Tutorials</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section class="about-hero" style="background:var(--bg-secondary);border-bottom:1px solid var(--border)">
+            <div class="container">
+                <div style="text-align:center;max-width:680px;margin:0 auto">
+                    <div class="section-label">About Helpbook</div>
+                    <h1 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Learning the web shouldn't be
+                        complicated</h1>
+                    <p style="color:var(--text-secondary);font-size:1.1rem;line-height:1.8;margin-bottom:2rem">
+                        Helpbook is a free, community-driven platform that makes web development approachable for
+                        everyone.
+                        No fluff. No jargon overload. Just clear explanations, real code, and hands-on practice.
+                    </p>
+                    <a href="tutorials.html" class="btn-primary btn-lg">Start Learning Free <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission -->
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div>
+                        <div class="section-label">Our Mission</div>
+                        <h2 class="section-title" style="text-align:left;font-size:2rem">Built for developers who learn
+                            by doing</h2>
+                        <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem">
+                            Every tutorial on Helpbook is written with one goal: to take a concept you've never heard of
+                            and make it feel obvious by the time you're done reading. We believe the best way to learn
+                            is through short feedback loops — read a concept, try it, see what happens.
+                        </p>
+                        <p style="color:var(--text-secondary);line-height:1.8">
+                            That's why every tutorial has an in-browser code editor. You don't need to install anything,
+                            configure a dev environment, or even create an account. Just open a tutorial and start
+                            coding.
+                        </p>
+                        <div class="about-feature-list">
+                            <div class="about-feature">
+                                <div class="about-feature-icon" style="background:rgba(79,126,255,0.15)">🎯</div>
+                                <div>
+                                    <div class="about-feature-title">Structured Learning Path</div>
+                                    <div class="about-feature-desc">Each tutorial builds on the last. We take you from
+                                        zero to full-stack in a logical, progressive order.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon" style="background:rgba(46,204,113,0.15)"><i
+                                        class="fas fa-bolt"></i></div>
+                                <div>
+                                    <div class="about-feature-title">Live Code Playground</div>
+                                    <div class="about-feature-desc">HTML, CSS, and JS editors built into every tutorial.
+                                        Edit and run code without leaving the page.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon" style="background:rgba(155,92,255,0.15)">📱</div>
+                                <div>
+                                    <div class="about-feature-title">Mobile Friendly</div>
+                                    <div class="about-feature-desc">Learn on your phone or tablet. Every page is
+                                        designed to be readable and usable on any screen size.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon" style="background:rgba(255,123,69,0.15)">🆓</div>
+                                <div>
+                                    <div class="about-feature-title">Always Free</div>
+                                    <div class="about-feature-desc">No paywalls. No subscription. No account required.
+                                        Just quality content, available to everyone.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:1rem">
+                        <!-- Stats cards -->
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;text-align:center">
+                            <div
+                                style="font-family:var(--font-display);font-size:3rem;font-weight:800;background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+                                50+</div>
+                            <div style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.25rem">Tutorials
+                                Written</div>
+                        </div>
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;text-align:center">
+                            <div
+                                style="font-family:var(--font-display);font-size:3rem;font-weight:800;color:var(--accent-cyan)">
+                                7</div>
+                            <div style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.25rem">Technologies
+                                Covered</div>
+                        </div>
+                        <div
+                            style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;text-align:center">
+                            <div
+                                style="font-family:var(--font-display);font-size:3rem;font-weight:800;color:var(--accent-green)">
+                                100%</div>
+                            <div style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.25rem">Free Forever
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Coverage -->
+        <section class="section" style="padding-top:0">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">What We Cover</div>
+                    <h2 class="section-title">The full stack, explained clearly</h2>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem">
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(255,123,69,0.1)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fab fa-html5"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">HTML</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">Document structure,
+                            semantic markup, forms, accessibility basics.</div>
+                    </div>
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(79,126,255,0.1)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fab fa-css3-alt"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">CSS</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">Selectors, Flexbox,
+                            Grid, animations, responsive design patterns.</div>
+                    </div>
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(247,223,30,0.08)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fab fa-js"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">JavaScript
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">ES6+, DOM
+                            manipulation, async/await, fetch API, modules.</div>
+                    </div>
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(56,189,248,0.1)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fas fa-wind"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">Tailwind CSS
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">Utility-first
+                            workflow, custom configs, component patterns.</div>
+                    </div>
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(46,204,113,0.1)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fab fa-node-js"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">Node.js</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">Server setup, Express
+                            routes, REST APIs, file system.</div>
+                    </div>
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(0,237,100,0.06)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fas fa-leaf"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">MongoDB</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">NoSQL concepts, CRUD,
+                            Mongoose schemas, aggregation.</div>
+                    </div>
+                    <div
+                        style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;background-color:rgba(155,92,255,0.1)">
+                        <div style="font-size:2rem;margin-bottom:0.75rem"><i class="fab fa-git-alt"></i></div>
+                        <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.4rem">Git &amp;
+                            GitHub</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">Version control,
+                            branching, pull requests, deployment.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="padding-top:1.5rem;border-top:1px solid var(--border)">
+                <div class="footer-copy">© 2026 Helpbook. Built for learners, by learners.</div>
+                <a href="tutorials.html" class="btn-outline" style="font-size:0.8rem">Browse Tutorials <i
+                        class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
